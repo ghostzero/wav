@@ -121,7 +121,7 @@ class Helper
      *
      * @return mixed
      */
-    protected function readUnpacked($handle, $type, $length)
+    protected static function readUnpacked($handle, $type, $length)
     {
         $data = unpack($type, fread($handle, $length));
 
@@ -135,7 +135,7 @@ class Helper
      *
      * @return int
      */
-    protected function writeUnpacked($handle, $type, $data)
+    protected static function writeUnpacked($handle, $type, $data)
     {
         return fwrite($handle, self::pack($type, $data));
     }
@@ -146,7 +146,7 @@ class Helper
      *
      * @return mixed
      */
-    protected function pack($type, $data)
+    protected static function pack($type, $data)
     {
         return pack($type, $data);
     }
