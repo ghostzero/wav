@@ -5,14 +5,13 @@
  * @year    2016
  */
 
-namespace Wav;
+namespace GhostZero\Wav;
 
-
-use Wav\Exception\UnknownGenerator;
-use Wav\Generator\AcousticGuitar;
-use Wav\Generator\Generator;
-use Wav\Generator\Organ;
-use Wav\Generator\Piano;
+use GhostZero\Wav\Exception\UnknownGenerator;
+use GhostZero\Wav\Generator\AcousticGuitar;
+use GhostZero\Wav\Generator\Generator;
+use GhostZero\Wav\Generator\Organ;
+use GhostZero\Wav\Generator\Piano;
 
 class GeneratorFactory
 {

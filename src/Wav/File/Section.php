@@ -5,8 +5,7 @@
  * @year    2016
  */
 
-namespace Wav\File;
-
+namespace GhostZero\Wav\File;
 
 abstract class Section
 {

@@ -1,16 +1,16 @@
 <?php
 /**
  * @author  Nikita Kolosov <anexroid@gmail.com>
+ * @author  René Preuß <rene@preuss.io>
  * @license MIT License
  * @year    2016
  */
 
-namespace Wav;
+namespace GhostZero\Wav;
 
-
-use Wav\File\DataSection;
-use Wav\File\FormatSection;
-use Wav\File\Header;
+use GhostZero\Wav\File\DataSection;
+use GhostZero\Wav\File\FormatSection;
+use GhostZero\Wav\File\Header;
 
 class Builder
 {
@@ -158,9 +158,21 @@ class Builder
             'blockAlign' => $this->blockAlign,
             'bitsPerSample' => $this->bitsPerSample,
         ]);
-        
+
         $header = Header::createFromDataSection($data);
 
         return new AudioFile($header, $format, $data);
+    }
+
+    public static function fromAudioFile(AudioFile $audioFile): Builder
+    {
+        return (new self)
+            ->setAudioFormat($audioFile->getAudioFormat())
+            ->setNumberOfChannels($audioFile->getNumberOfChannels())
+            ->setSampleRate($audioFile->getSampleRate())
+            ->setByteRate($audioFile->getByteRate())
+            ->setBlockAlign($audioFile->getBlockAlign())
+            ->setBitsPerSample($audioFile->getBitsPerSample())
+            ->setSamples($audioFile->getAsSamples());
     }
 }

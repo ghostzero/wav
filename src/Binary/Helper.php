@@ -5,7 +5,7 @@
  * @year    2016
  */
 
-namespace Binary;
+namespace GhostZero\Binary;
 
 
 class Helper

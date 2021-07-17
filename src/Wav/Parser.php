@@ -1,21 +1,21 @@
 <?php
 /**
  * @author  Nikita Kolosov <anexroid@gmail.com>
+ * @author  René Preuß <rene@preuss.io>
  * @license MIT License
  * @year    2016
  */
 
-namespace Wav;
+namespace GhostZero\Wav;
 
-
-use Binary\Helper;
-use Wav\Exception\FileIsNotExistsException;
-use Wav\Exception\FileIsNotReadableException;
-use Wav\Exception\FileIsNotWavFileException;
-use Wav\File\DataSection;
-use Wav\File\FormatSection;
-use Wav\File\Header;
-
+use GhostZero\Binary\Helper;
+use GhostZero\Wav\Exception\FileIsNotExistsException;
+use GhostZero\Wav\Exception\FileIsNotReadableException;
+use GhostZero\Wav\Exception\FileIsNotWavFileException;
+use GhostZero\Wav\Exception\InvalidWavDataException;
+use GhostZero\Wav\File\DataSection;
+use GhostZero\Wav\File\FormatSection;
+use GhostZero\Wav\File\Header;
 
 class Parser
 {
@@ -26,15 +26,16 @@ class Parser
      * @throws FileIsNotExistsException
      * @throws FileIsNotReadableException
      * @throws FileIsNotWavFileException
+     * @throws InvalidWavDataException
      */
-    public static function fromFile($filename)
+    public static function fromFile(string $filename): AudioFile
     {
         if (!file_exists($filename)) {
             throw new FileIsNotExistsException('File "' . $filename . '" is not exists.');
         }
 
         if (!is_readable($filename)) {
-           throw new FileIsNotReadableException('File "' . $filename . '" is not readable"');
+            throw new FileIsNotReadableException('File "' . $filename . '" is not readable"');
         }
 
         if (is_dir($filename)) {
@@ -45,13 +46,24 @@ class Parser
         if ($size < AudioFile::HEADER_LENGTH) {
             throw new FileIsNotWavFileException('File "' . $filename . '" is not a wav-file');
         }
-        
+
         $handle = fopen($filename, 'rb');
 
+        return self::fromStream($handle);
+    }
+
+    /**
+     * @param resource $handle resource to wav-file
+     *
+     * @return AudioFile
+     * @throws InvalidWavDataException
+     */
+    public static function fromStream($handle): AudioFile
+    {
         try {
-            $header         = Header::createFromArray(self::parseHeader($handle));
-            $formatSection  = FormatSection::createFromArray(self::parseFormatSection($handle));
-            $dataSection    = DataSection::createFromArray(self::parseDataSection($handle));
+            $header = Header::createFromArray(self::parseHeader($handle));
+            $formatSection = FormatSection::createFromArray(self::parseFormatSection($handle));
+            $dataSection = DataSection::createFromArray(self::parseDataSection($handle));
         } finally {
             fclose($handle);
         }
@@ -63,11 +75,11 @@ class Parser
      * @param resource $handle
      * @return array
      */
-    protected static function parseHeader($handle)
+    protected static function parseHeader($handle): array
     {
         return [
-            'id'     => Helper::readString($handle, 4),
-            'size'   => Helper::readLong($handle),
+            'id' => Helper::readString($handle, 4),
+            'size' => Helper::readLong($handle),
             'format' => Helper::readString($handle, 4),
         ];
     }
@@ -76,17 +88,17 @@ class Parser
      * @param resource $handle
      * @return array
      */
-    protected static function parseFormatSection($handle)
+    protected static function parseFormatSection($handle): array
     {
         return [
-            'id'               => Helper::readString($handle, 4),
-            'size'             => Helper::readLong($handle),
-            'audioFormat'      => Helper::readWord($handle),
+            'id' => Helper::readString($handle, 4),
+            'size' => Helper::readLong($handle),
+            'audioFormat' => Helper::readWord($handle),
             'numberOfChannels' => Helper::readWord($handle),
-            'sampleRate'       => Helper::readLong($handle),
-            'byteRate'         => Helper::readLong($handle),
-            'blockAlign'       => Helper::readWord($handle),
-            'bitsPerSample'    => Helper::readWord($handle),
+            'sampleRate' => Helper::readLong($handle),
+            'byteRate' => Helper::readLong($handle),
+            'blockAlign' => Helper::readWord($handle),
+            'bitsPerSample' => Helper::readWord($handle),
         ];
     }
 
@@ -95,7 +107,7 @@ class Parser
      *
      * @return array
      */
-    protected static function parseDataSection($handle)
+    protected static function parseDataSection($handle): array
     {
         $data = [
             'id' => Helper::readString($handle, 4),

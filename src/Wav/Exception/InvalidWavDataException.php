@@ -5,7 +5,7 @@
  * @year    2016
  */
 
-namespace Wav\Exception;
+namespace GhostZero\Wav\Exception;
 
 
 class InvalidWavDataException extends WavException

@@ -5,7 +5,7 @@
  * @year    2016
  */
 
-namespace Wav;
+namespace GhostZero\Wav;
 
 
 class Note

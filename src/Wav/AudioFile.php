@@ -1,9 +1,9 @@
 <?php
 
-namespace Wav;
+namespace GhostZero\Wav;
 
-use Binary\Helper;
-use Wav\Exception\DirectoryIsNotWritableException;
+use GhostZero\Binary\Helper;
+use GhostZero\Wav\Exception\DirectoryIsNotWritableException;
 
 /**
  * @author  Nikita Kolosov <anexroid@gmail.com>

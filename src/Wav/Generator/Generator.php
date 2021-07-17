@@ -5,7 +5,7 @@
  * @year    2016
  */
 
-namespace Wav\Generator;
+namespace GhostZero\Wav\Generator;
 
 
 abstract class Generator

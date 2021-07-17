@@ -5,11 +5,11 @@
  * @year    2016
  */
 
-namespace Wav;
+namespace GhostZero\Wav;
 
 
-use Binary\Helper;
-use Wav\Generator\Generator;
+use GhostZero\Binary\Helper;
+use GhostZero\Wav\Generator\Generator;
 
 class SampleBuilder
 {

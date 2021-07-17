@@ -1,8 +1,8 @@
 <?php
 
-namespace Wav\File;
+namespace GhostZero\Wav\File;
 
-use Wav\Exception\InvalidWavDataException;
+use GhostZero\Wav\Exception\InvalidWavDataException;
 
 /**
  * Header structure of wav-file

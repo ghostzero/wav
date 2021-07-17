@@ -5,7 +5,7 @@
  * @year    2016
  */
 
-namespace Wav\Exception;
+namespace GhostZero\Wav\Exception;
 
 
 class DirectoryIsNotWritableException extends WavException

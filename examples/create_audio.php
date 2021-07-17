@@ -5,9 +5,14 @@
  * @year    2016
  */
 
+use GhostZero\Wav\Builder;
+use GhostZero\Wav\Generator\AcousticGuitar;
+use GhostZero\Wav\SampleBuilder;
+use GhostZero\Wav\WaveFormat;
+
 require_once __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 
-$sampleBuilder = new \Wav\SampleBuilder(\Wav\Generator\AcousticGuitar::NAME);
+$sampleBuilder = new SampleBuilder(AcousticGuitar::NAME);
 
 $samples = [
     $sampleBuilder->note('E', 5, 0.3),
@@ -21,11 +26,11 @@ $samples = [
     $sampleBuilder->note('A', 4, 1),
 ];
 
-$builder = (new Wav\Builder())
-    ->setAudioFormat(\Wav\WaveFormat::PCM)
+$builder = (new Builder())
+    ->setAudioFormat(WaveFormat::PCM)
     ->setNumberOfChannels(1)
-    ->setSampleRate(\Wav\Builder::DEFAULT_SAMPLE_RATE)
-    ->setByteRate(\Wav\Builder::DEFAULT_SAMPLE_RATE * 1 * 16 / 8)
+    ->setSampleRate(Builder::DEFAULT_SAMPLE_RATE)
+    ->setByteRate(Builder::DEFAULT_SAMPLE_RATE * 1 * 16 / 8)
     ->setBlockAlign(1 * 16 / 8)
     ->setBitsPerSample(16)
     ->setSamples($samples);
